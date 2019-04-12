@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    {% include 'user/partials/profile-nav.html.twig' %}
+    <div class="column is-12 is-paddingless-top">
+        <div>
+
+        <img src="https://bulma.io/images/placeholders/64x64.png">
+        <p class="column is-12 is-marginless is-paddingless">
+            <p>Nombre de questions envoyées : <i class="fa fa-pencil"></i> {{ app.user.questions|length }}</p>
+            <p>Nombre de réponses envoyées : <i class="fa fa-reply"></i> {{ app.user.answers|length }}</p>
+            <p>Score : <i class="fa fa-star-o"></i> {{ app.user.getUserVoteOnHisQuestion() }}</p>
+        </p>
+    </div>
+
+        </div>
+{% endblock %}

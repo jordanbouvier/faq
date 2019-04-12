@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'user/partials/profile-nav.html.twig' %}
+    <div class="field">
+        <div class="label">Pseudo:</div>
+        <div class="control">
+            <input class="input" value="{{ app.user.username }}" readonly>
+        </div>
+    </div>
+    {{ form_start(form_user) }}
+    {{ form_row(form_user.email) }}
+    {{ form_row(form_user.password) }}
+    {{ form_row(form_user.website) }}
+    <button type="submit" class="button is-link">Envoyer</button>
+    {{ form_end(form_user) }}
+{% endblock %}

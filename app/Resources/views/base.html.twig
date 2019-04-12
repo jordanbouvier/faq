@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}O'FAQ{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+    <link href="{{ asset('css/bulma/bulma.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+</head>
+<body>
+
+{% include 'partials/nav.html.twig' %}
+
+
+<div class="container container-page">
+    <div class="notification">
+        <button class="delete"></button>
+        Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
+        consectetur adipiscing elit
+    </div>
+
+    {% for label, messages in app.flashes() %}
+        {% for message in messages %}
+            <div class="notification {{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% block body %}{% endblock %}
+
+
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+            <p>
+                <strong>O'FAQ</strong> All Rights Reserved.
+            </p>
+        </div>
+    </div>
+</footer>
+<script
+        src="{{ asset('js/jQuery/jquery-3.2.1.min.js') }}"
+        >
+
+</script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+<script src="{{ asset('js/bulma/bulma.js') }}"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

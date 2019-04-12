@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/tags/bootstrap-tagsinput.css') }}">
+
+    {% endblock %}
+{% block body %}
+    <h1>Poser une question</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.title, {'label' : 'Titre'}) }}
+    {{ form_row(form.content, {'label' : 'Contenu'}) }}
+    {{ form_row(form.tags, {'label' : 'Tags'}) }}
+    <button class="button" type="submit" >Envoyer</button>
+
+  {{ form_end(form) }}
+
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}

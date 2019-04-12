@@ -1,0 +1,54 @@
+<nav class="navbar" aria-label="dropdown navigation">
+    <div class="navbar-brand">
+
+        <a href="{{ path('homepage') }}" class="navbar-item">
+            <p>O'Faq</p>
+
+        </a>
+
+    <button class="button navbar-burger" data-target="navMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    </div>
+
+    <div class="navbar-menu" id="navMenu">
+
+
+
+        <a href="{{ path('homepage') }}" class="navbar-item">
+                <span class="icon">
+                    <i class="fa fa-home"></i>
+                </span>Accueil
+        </a>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('question_new') }}" class="navbar-item">
+                <span class="icon">
+                    <i class="fa fa-pencil"></i>
+                </span>Poser une question!
+            </a>
+            <a href="{{ path('user_profile') }}" class="navbar-item">
+                <span class="icon">
+                    <i class="fa fa-user"></i>
+                </span>Mon compte
+            </a>
+            <a href="{{ path('logout') }}" class="navbar-item">
+                <span class="icon">
+                    <i class="fa fa-sign-out"></i>
+                </span>Se déconnecter
+            </a>
+        {% else %}
+            <a href="{{ path('register') }}" class="navbar-item">
+                <span class="icon">
+                    <i class="fa fa-plus"></i>
+                </span>S'inscrire</a>
+            <a href="{{ path('login') }}" class="navbar-item">
+                <span class="icon">
+                    <i class="fa fa-sign-in"></i>
+                </span>Se connecter
+            </a>
+        {% endif %}
+
+    </div>
+</nav>

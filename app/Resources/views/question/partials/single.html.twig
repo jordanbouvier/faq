@@ -1,0 +1,33 @@
+<div class="box">
+    <article class="media">
+
+        <div class="media-content">
+            <div class="content columns">
+                <div class="column auto has-text-centered">
+                    <p><i class="fa fa-eye" aria-hidden="true"></i> {{ question.viewCount }}</p>
+                    <p><i class="fa fa-reply" aria-hidden="true"></i> {{ question.answers|length }} </p>
+                    <p><i class="fa fa-star-o" aria-hidden="true"></i> {{ question.rating }}</p>
+                </div>
+                <div class="column is-three-quarters">
+
+                    <div class="tag {{ question.isSolved ? 'is-danger' : 'is-warning' }} is-pulled-right">{{ question.isSolved ? 'Résolu' : 'En cours' }}</div>
+                    <h2 class="is-size-6">
+
+                        <a href="{{ path('question_show', {'id': question.id }) }}"> <strong>{{ question.title }}</strong></a>
+
+                    </h2>
+
+                    <p class="is-size-6">{{ question.content|slice(0,150)}}...</p>
+                    <div>
+                        {% for tag in question.tags %}
+                            <span class="tag is-light"><i class="fa fa-tags"></i>{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </article>
+</div>

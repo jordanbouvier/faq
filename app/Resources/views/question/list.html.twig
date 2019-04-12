@@ -1,0 +1,28 @@
+{% if questions is defined and questions|length > 0 %}
+    {% for question in questions %}
+        {% include 'question/partials/single.html.twig' %}
+
+    {% endfor %}
+    {% if countQuestions is defined and questionsPerPage is defined %}
+            {% set page = (countQuestions/ questionsPerPage)|round(0,'ceil') %}
+            {% if page > 0 %}
+                {% set requestPage = app.request.get('page') %}
+                {% set previousPage = (requestPage - 1) > 0  ? requestPage - 1 < page ? requestPage - 1 : page - 1 : 1 %}
+                {% set nextPage = (requestPage + 1) <= page  ? requestPage + 1 > 0 ? requestPage + 1 : 1 : page %}
+
+            <nav class="pagination" role="navigation" aria-label="pagination">
+                <a href="?page={{ previousPage }}" class="pagination-previous">Page précédente</a>
+                <a href="?page={{ nextPage }}" class="pagination-next">Page suivante</a>
+                <ul class="pagination-list">
+                    {% for i in 1..page  %}
+                        <li>
+                            <a href="?page={{ i }}" class="pagination-link is-current" aria-label="Go to page {{ i }}" aria-current="page">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            {% endif %}
+        {% endif %}
+    {% else %}
+    <div class="notification is-info has-text-centered">Aucun résultat</div>
+{% endif %}

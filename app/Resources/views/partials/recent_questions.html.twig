@@ -1,0 +1,15 @@
+<div class="panel">
+    <p class="panel-heading">
+        10 questions récentes
+    </p>
+
+    {% for question in lastTenQuestions %}
+    <a  href="{{ path('question_show', {'id': question.id }) }}" class="panel-block is-active">
+    <span class="panel-icon">
+      <i class="fa fa-tags"></i>
+    </span>
+        {{ question.title|slice(0,29) }}...
+    </a>
+    {% endfor %}
+
+</div>

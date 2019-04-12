@@ -1,0 +1,8 @@
+<div class="tabs">
+    <ul>
+        {% set route =  app.request.get('_route') %}
+        <li class="{{ route == 'user_profile' ? 'is-active' : '' }}"><a href="{{ path('user_profile') }}">Mon compte</a></li>
+        <li class="{{ route == 'user_question' ? 'is-active' : '' }}" ><a href="{{ path('user_question') }}">Mes questions</a></li>
+        <li class="{{ route == 'user_stats' ? 'is-active' : '' }}" ><a href="{{ path('user_stats') }}">Mes stats</a></li>
+    </ul>
+</div>

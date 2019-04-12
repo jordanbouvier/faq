@@ -1,0 +1,31 @@
+{% if question.answers|length > 0 %}
+    <div class="box" id="answer-list">
+
+        {% for answer in question.answers %}
+            {% set hideAnswer = is_granted('hide', answer) %}
+            {% if answer.isVisible %}
+                <article class="media {{ answer.isVisible ? '' : 'background-grey'}}">
+
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>{{ answer.user.username }}</strong>
+                                <br>
+                                {{ answer.content }}
+                                <br>
+                                <small>Le {{ answer.submitDate.format('d-m-Y H:i:s') }}</small>
+
+                            </p>
+                        </div>
+                    </div>
+                    {% if hideAnswer %}<button class="delete is-small hideAnswer" data-id="{{ answer.id }}"></button>{% endif %}
+                </article>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <div class="columns">
+        <div class="column is-three-quarters">
+
+    <div class="box" id="question-show">
+        {% if is_granted('hide', question) %}
+            <button class="delete is-small hideQuestion is-pulled-right" data-id="{{ question.id }}"></button>
+        {% endif %}
+        <article class="media is-paddingless">
+
+            <div class="media-content column is-12 is-paddingless">
+
+
+
+                <h2 class="is-size-5 column is-12 is-paddingless-top is-paddingless-bottom">{{ question.title }}
+                    <span id="question-status" class="tag  {{ question.isSolved ? 'is-danger' : 'is-warning' }} is-pulled-right">{{ question.isSolved ? 'Résolu' : 'En cours' }}</span>
+                </h2>
+
+                <hr>
+                <p class="column is-12 is-paddingless-top is-paddingless-bottom">
+                    {{ question.content}}
+                </p>
+
+                <p class="column is-12">
+                    {% for tag in question.tags %}
+                         <span class="tag is-light"><i class="fa fa-tags"></i>{{ tag.name }}</span>
+                    {% endfor %}
+                </p>
+
+
+                <div class="column is-12 columns is-multiline is-paddingless-bottom is-paddingless-top">
+
+                    <div class="column is-12 is-size-2 is-paddingless-bottom is-paddingless-top">
+                        <a href="" class="" id="upvote" data-id="{{ question.id }}"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                        <small id="voteCount">{{ question.rating }}</small>
+                        <a  class="" id="downvote" data-id="{{ question.id }}"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+
+                    </div>
+
+                    <div class="column is-12 is-paddingless-top">
+                        <div class="has-text-right">
+                            <img src="https://bulma.io/images/placeholders/64x64.png" alt="default image"}>
+                            <p class="column is-12 is-marginless is-paddingless padding"><strong>{{ question.user.username }}</strong></p>
+                            <p class="column is-12 is-marginless is-paddingless">
+                                <span><i class="fa fa-star-o"></i> {{ question.user.getUserVoteOnHisQuestion() }}</span>
+                                <span><i class="fa fa-pencil"></i> {{ question.user.questions|length }}</span>
+                                <span><i class="fa fa-reply"></i> {{ question.user.answers|length }}</span>
+                            </p>
+                            <small class="is-block column is-12 is-paddingless">Le {{ question.submitDate.format('d-m-Y H:i:s') }}</small>
+
+                            {% if  is_granted('solved', question) %}
+                                <button id="solveQuestion" data-id="{{ question.id }}" class="button is-danger is-small">Fermer la question</button>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </article>
+    </div>
+
+    {% include 'answer/list.html.twig' %}
+    {% if form_edit %}
+    <div class="box">
+        <article class="media">
+            <div class="media-content">
+                {{ form_start(form_edit, {'attr' : { 'id': 'add-answer', 'data-id': question.id }}) }}
+                <div class="field">
+                    <p class="control">
+                        {{ form_row(form_edit.content, {'label': 'Réponse'}) }}
+                    </p>
+                </div>
+                <div class="level">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <button type="submit" class="button is-info">Envoyer</button>
+                        </div>
+                    </div>
+
+                </div>
+                {{ form_end(form_edit) }}
+            </div>
+        </article>
+    </div>
+    {% endif %}
+        </div>
+        <div class="column">
+            {% include 'partials/panel_tags.html.twig' %}
+            {% include 'partials/recent_questions.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        var baseUrl = 'http://{{ app.request.getHost() }}';
+        console.log(baseUrl);
+        var solveQuestionRoute = baseUrl + "{{ path('question_solve')|escape('js') }}";
+        var voteQuestionRoute = baseUrl + "{{ path('question_vote')|escape('js') }}";
+        var hideQuestionRoute = baseUrl + "{{ path('question_hide')|escape('js') }}";
+        var addAnswerRoute = baseUrl + "{{ path('question_add_answer', {'id': question.id })|escape('js') }}";
+
+    </script>
+    <script src="{{ asset('js/solveQuestion.js') }}"></script>
+    <script src="{{ asset('js/voteQuestion.js') }}"></script>
+    <script src="{{ asset('js/hideQuestion.js') }}"></script>
+    <script src="{{ asset('js/addAnswer.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <div class="box">
+                {{ form_start(question_form_edit) }}
+                    {{ form_row(question_form_edit.title, {'label': 'Titre'}) }}
+                    {{ form_row(question_form_edit.content, {'label': 'Contenu'}) }}
+
+                    {{ form_row(question_form_edit.tags, {'label': 'Liste des tags'}) }}
+                    <div class="control">
+                        <button class="button is-info" type="submit">Envoyer</button>
+                    </div>
+
+
+                {{ form_end(question_form_edit) }}
+            </div>
+                {% include 'answer/list.html.twig' %}
+        </div>
+        <div class="column ">
+            {% include 'partials/panel_tags.html.twig' %}
+            {% include 'partials/recent_questions.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

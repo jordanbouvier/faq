@@ -1,0 +1,167 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: fr
+    upload_directory: '%kernel.project_dir%/web/uploads'
+
+framework:
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.project_dir%/app/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    session:
+        # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id: session.handler.native_file
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'bulma/bulma.html.twig'
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.project_dir%/var/data/data.sqlite'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+easy_admin:
+    entities:
+        Question:
+            class: AppBundle\Entity\Question
+            label: 'Question'
+            list:
+                title: "Liste des questions"
+                fields:
+                   - { property: 'id', label: 'Identifiant' }
+                   - { property: 'title', label: 'Titre' }
+                   - { property: 'content', label: 'Contenu' }
+                   - { property: 'submitDate', label: 'Date d envoi' }
+                   - { property: 'isSolved', label: 'Est résolu' }
+                   - { property: 'rating', label: 'Score' }
+                   - { property: 'viewCount', label: 'Nombre de vues' }
+                   - { property: 'answers', label: 'Nombre de réponses' }
+                   - { property: 'user', label: 'Auteur' }
+            edit:
+                 title: 'Éditer une question'
+                 fields:
+                    - { property: 'isSolved', label: 'Est résolu' }
+
+            new:
+                title: 'Ajouter une question'
+                fields:
+                    - { property: 'user', label: 'Auteur' }
+
+            form:
+                 fields:
+                   - { property: 'title', label: 'Titre' }
+                   - { property: 'content', label: 'Contenu' }
+
+                   - { property: 'tags', label: 'Tags' }
+        User:
+              class: AppBundle\Entity\User
+              label: 'Utilisateurs'
+              disabled_actions: ['new']
+              password_encoding: { algorithm: 'bcrypt', cost: 12 }
+              list:
+                title: "Liste des utilisateurs"
+                fields:
+                   - { property: 'id', label: 'Identifiant' }
+                   - { property: 'username', label: 'Pseudo' }
+                   - { property: 'email', label: 'E-mail' }
+                   - { property: 'isActive', label: 'Est actif' }
+                   - { property: 'website', label: 'Site internet' }
+                   - { property: 'picture', label: 'Image' }
+                   - { property: 'answers', label: 'Réponses' }
+
+              edit:
+                  title: 'Editer un utilisateur'
+                  form_options: { validation_groups: ['Default', 'Customer'] }
+                  fields:
+                      - { property: 'username', label: 'Pseudo' }
+                      - { property: 'email', label: 'E-mail' }
+                      - { property: 'password', label: 'Mot de passe', type: 'password', type_options: { required: false } }
+                      - { property: 'website', label: 'Site internet' }
+                      - { property: 'picture', label: 'Image' }
+                      - { property: 'isActive', label: 'Est actif' }
+              new:
+                  title: 'Ajouter un utilisateur'
+                  fields:
+                      - { property: 'username', label: 'Pseudo' }
+                      - { property: 'email', label: 'E-mail' }
+                      - { property: 'password', label: 'Mot de passe' }
+                      - { property: 'website', label: 'Site internet' }
+                      - { property: 'picture', label: 'Image' }
+
+
+
+        Tag:
+              class: AppBundle\Entity\Tag
+              label: 'Tags'
+              list:
+                title: "Liste des tags"
+                fields:  [{ property: 'id', label: 'Identifiant' }, { property: 'name', label: 'Nom' }]
+              show:
+                title: "%%entity_label%% (#%%entity_id%%)"
+
+              new:
+                title: 'Ajouter un tag'
+              edit:
+                title: 'Éditer un tag'
+
+              form:
+
+                fields:
+                    - { property: 'name', label: 'Nom' }
+
+
+    site_name: "O'Faq"
+    design:
+        brand_color: '#1ABC9C'
+        color_scheme: 'light'

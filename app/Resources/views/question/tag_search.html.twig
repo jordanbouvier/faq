@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div class="columns">
+        <div class="column is-three-quarters">
+            {% set tagSearch = app.request.get('q')|split(',') %}
+            {% if tagSearch|length > 0 and tagSearch[0] != "" %}
+                <p class="notification is-info">Résultat de la recherche avec le(s) tag(s)
+                    {% for tag in tagSearch  %}
+                        <span><i class="fa fa-tags"></i> {{ tag }}</span>
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {% include 'question/list.html.twig' with {'questions': questions} %}
+        </div>
+        <div class="column">
+            {% include 'partials/panel_tags.html.twig' %}
+            {% include 'partials/recent_questions.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

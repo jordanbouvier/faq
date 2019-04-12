@@ -1,0 +1,30 @@
+<div class="panel">
+    <p class="panel-heading">
+        Recherche par tag
+    </p>
+    <div class="panel-block">
+
+        <form  class="column col-12 is-paddingless" action="{{ path('question_by_tag') }}">
+            <div class="field">
+                <div class="control  has-icons-left">
+                     <input name="q" class="input is-small" type="text" placeholder="tag1,tag2,tag3">
+                    <span class="icon is-small is-left">
+        <i class="fa fa-search"></i>
+         </span>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+
+    {% for tag in tagList %}
+    <a href="{{ path('question_by_tag') }}?q={{ tag.name }}" class="panel-block {{ tag.name|lower in app.request.get('q', false)|lower ? 'is-active': '' }}">
+    <span class="panel-icon">
+      <i class="fa fa-tags"></i>
+    </span>
+        {{ tag.name }}
+    </a>
+    {% endfor %}
+
+</div>

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'user/partials/profile-nav.html.twig' %}
+    {% if questions %}
+        {% for question in questions %}
+            {% include 'question/partials/single.html.twig' %}
+        {% endfor %}
+    {% else %}
+        <div class="notification is-info">Aucune question</div>
+    {% endif %}
+{% endblock %}

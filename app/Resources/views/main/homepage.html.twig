@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="columns">
+        <div class="column is-three-quarters">
+            {% include 'question/list.html.twig' with {'questions': questions} %}
+        </div>
+        <div class="column">
+            {% include 'partials/panel_tags.html.twig' %}
+            {% include 'partials/recent_questions.html.twig' %}
+        </div>
+    </div>
+{% endblock %}
